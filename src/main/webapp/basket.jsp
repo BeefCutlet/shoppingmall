@@ -17,6 +17,7 @@
 	width: 600px;
 	margin: 0 auto;
 }
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </style>
 </head>
 <body>
@@ -25,19 +26,37 @@
 	<div class="container">
 		<div class="basketList">
 			<table>
-			<c:forEach items=${ param.basketList } var="basket">
-			<tr>
-				<td><input type="checkbox" id="${ param.basketList }" name="${ param.basketList }"></td>
-				<td>
-					<ul>
-						<li>${ param.basketList.name }</li>
-						<li><input type="text" value="${ param.basketList.amount }" readonly><button type="button" id="increase">수량증가</button></li>
-					</ul>
-				</td>
-			</tr>
-			</c:forEach>
+			<c:choose>
+				<c:when test="${ empty basketList }">
+					<tr>
+						<td>장바구니가 비었습니다.</td>
+					</tr>
+				</c:when>
+				<c:otherwise>
+					<c:forEach items="${ basketList }" var="basketList">
+						<tr>
+							<td><input type="checkbox" id="select" name="basketNo" value="${ basketList.basketNo }"/></td>
+							<td>${ basketList.productName }</td>
+							<td><input type="text" id="amount" name="amount" value="${ basketList.amount }"/><button type="button" id="edit">수정</button></td>
+						</tr>
+					</c:forEach>
+					<tr>
+						<td colspan="3"><button type="submit" id="pay">결제페이지로 이동</button></td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
 			</table>
 		</div>
 	</div>
+	<script type="text/javascript">
+	$("#edit").click(function() {
+		if ($("#amount").val() == null || $("amount").val() <= 0) {
+			alert("1 이상의 숫자를 입력하세요.");
+			return;
+		} else {
+			
+		}
+	});
+	</script>
 </body>
 </html>

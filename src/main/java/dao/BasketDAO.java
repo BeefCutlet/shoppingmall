@@ -28,15 +28,18 @@ public class BasketDAO extends ConnectionPool {
 		ResultSet rs = null;
 		
 		try {
-			String sql = "SELECT * FROM basket ORDER BY id";
+			String sql = "SELECT basketNo, productNo, pname, amount FROM basket"
+					+ " JOIN product ON basket.productNo = product.pno"
+					+ " ORDER BY basketNo DESC";
 			con = getConnection();
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
 				BasketDTO dto = new BasketDTO();
-				dto.setId(rs.getLong("id"));
-				dto.setName(rs.getString("name"));
+				dto.setBasketNo(rs.getInt("basketNo"));
+				dto.setProductNo(rs.getInt("productNo"));
+				dto.setProductName(rs.getString("pname"));
 				dto.setAmount(rs.getInt("amount"));
 				basketList.add(dto);
 			}
