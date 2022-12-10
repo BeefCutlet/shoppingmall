@@ -25,4 +25,12 @@ public class BasketController extends HttpServlet {
 		
 		request.getRequestDispatcher("basket.jsp").forward(request, response);
 	}
+	
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int amount = Integer.parseInt(request.getParameter("amount"));
+		int basketNo = Integer.parseInt(request.getParameter("basketNo"));
+		BasketDAO.getBasketDAO().updateBasketList(amount, basketNo);
+		response.sendRedirect("./basket");
+	}
 }

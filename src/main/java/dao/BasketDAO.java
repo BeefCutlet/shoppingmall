@@ -51,4 +51,23 @@ public class BasketDAO extends ConnectionPool {
 		
 		return basketList;
 	}
+	
+	public int updateBasketList(int amount, int basketNo) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int rows = 0;
+		
+		try {
+			String sql = "UPDATE basket SET amount=? WHERE basketNo=?";
+			con = getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, amount);
+			pstmt.setInt(2, basketNo);
+			rows = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return rows;
+	}
 }
