@@ -64,6 +64,9 @@ public class BasketDAO extends ConnectionPool {
 			pstmt.setInt(1, amount);
 			pstmt.setInt(2, basketNo);
 			rows = pstmt.executeUpdate();
+			if (rows > 0) {
+				System.out.println("BasketDAO.updateBasketList() 성공");
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
